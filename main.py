@@ -3,7 +3,7 @@
 import logging
 from aiogram import executor
 from loader import dp, start_up, on_shutdown
-from handlers.default_heandlers import start
+# from handlers.default_heandlers import start
 from utils.logging import logger_root
 from database import database
 # from logging import Logger
