@@ -9,7 +9,7 @@ from keyboards.reply import list_button
 from aiogram.dispatcher import FSMContext
 from database import database
 from datetime import date, timedelta
-from keyboards.inline import main_menu
+from keyboards.inline import back_main_menu
 from loader import bot
 from handlers.custom_handlers import handler_cmd_low, handler_cmd_high, handler_cmd_custom
 

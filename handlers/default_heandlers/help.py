@@ -1,6 +1,6 @@
 from aiogram import types
 from loader import dp
-from keyboards.inline import main_menu
+from keyboards.inline import back_main_menu
 
 
 __HELP_MESSAGE = """<b>/low</b> - <em>самая низкая стоимость,

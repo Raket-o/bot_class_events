@@ -90,9 +90,7 @@ def check_password(*args):
         return check_pass
 
 
-def update_info_for_db(telegram_id, user_first_name, user_last_name, id_student):
-    print(id_student)
-
+def update_info_for_db(telegram_id, user_first_name, user_last_name, student_name):
     with sqlite3.connect('database/database.db') as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
@@ -101,8 +99,46 @@ def update_info_for_db(telegram_id, user_first_name, user_last_name, id_student)
             SET telegram_id = ?, user_first_name = ?, user_last_name = ?
             WHERE student_name = ?;
             """,
-            (telegram_id, user_first_name, user_last_name, id_student)
+            (telegram_id, user_first_name, user_last_name, student_name)
         )
+
+def get_evets():
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT *
+            FROM table_events
+            """
+        )
+        list_events = cursor.fetchall()
+        return list_events
+
+
+def gets_students():
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT *
+            FROM table_users
+            """
+        )
+        list_users = cursor.fetchall()
+        return list_users
+
+def add_student(name_student):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO table_users (student_name) VALUES (?);
+            """,
+            (name_student, )
+        )
+        list_users = cursor.fetchall()
+        return list_users
+
 
 
     # SET telegram_id = {telegram_id}, user_first_name = {user_first_name}, user_last_name = {user_last_name}

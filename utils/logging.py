@@ -1,13 +1,9 @@
+""" Модуль логгера. Записывает лог с ошибками в ./logs/err.log."""
+
 import logging
 import logging.config
 import sys
-# from log_setup import dict_config
-
-
-# logging.basicConfig(
-#     # level=logging.DEBUG
-#     level=logging.DEBUG
-# )
+import os
 
 dict_config = {
     "version": 1,
@@ -28,16 +24,16 @@ dict_config = {
             "formatter": "base",
             "stream": sys.stdout
         },
-        # "file_info_utils": {
-        #     "class": "logging.handlers.TimedRotatingFileHandler",
-        #     "filename": "./logs/info.log",
-        #     "when": "H",
-        #     "interval": 10,
-        #     "backupCount": 1,
-        #     "level": "DEBUG",
-        #     "encoding": "utf8",
-        #     "formatter": "base"
-        # },
+        "file_info_utils": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": "./logs/info.log",
+            "when": "H",
+            "interval": 10,
+            "backupCount": 1,
+            "level": "DEBUG",
+            "encoding": "utf8",
+            "formatter": "base"
+        },
         "file_errors_utils": {
             "class": "logging.handlers.TimedRotatingFileHandler",
             "filename": "./logs/err.log",
@@ -52,24 +48,55 @@ dict_config = {
     "loggers": {
         "logger_main": {
             "level": "DEBUG",
+            "handlers": ["console", "file_info_utils"]
+        },
+        "logger_handler_high_low_price": {
+            "level": "ERROR",
             "handlers": ["console", "file_errors_utils"]
         },
-        "logger_main.logger_handler_high_low_price": {
-            "level": "DEBUG",
+        "logger_get_meta_data": {
+            "level": "ERROR",
             "handlers": ["console", "file_errors_utils"]
         },
-        "logger_main.get_meta_data": {
+        "logger_loader": {
             "level": "DEBUG",
+            "handlers": ["console", "file_info_utils"]
+        },
+        "logger_handler_cmd_low": {
+            "level": "ERROR",
+            "handlers": ["console", "file_errors_utils"]
+        },
+        "logger_handler_cmd_high": {
+            "level": "ERROR",
+            "handlers": ["console", "file_errors_utils"]
+        },
+        "logger_handler_cmd_custom": {
+            "level": "ERROR",
+            "handlers": ["console", "file_errors_utils"]
+        },
+        "logger_handler_filter_price": {
+            "level": "ERROR",
+            "handlers": ["console", "file_errors_utils"]
+        },
+        "logger_handler_filter_meal_plan": {
+            "level": "ERROR",
+            "handlers": ["console", "file_errors_utils"]
+        },
+        "logger_handler_filter_amenities": {
+            "level": "ERROR",
+            "handlers": ["console", "file_errors_utils"]
+        },
+        "logger_handler_filter_star": {
+            "level": "ERROR",
             "handlers": ["console", "file_errors_utils"]
         }
     }
 }
 
-
+if not os.path.exists("logs"):
+    os.makedirs("logs")
 
 logging.config.dictConfig(dict_config)
 
-logger_root = logging.getLogger('')
+logger_root= logging.getLogger('')
 logger_root.setLevel(logging.DEBUG)
-
-# logger = logging.getLogger("logger_bot")

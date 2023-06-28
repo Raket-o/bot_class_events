@@ -9,3 +9,16 @@ class UserInfoState(StatesGroup):
     user_last_name = State()
     student_name = State()
 
+
+class AdminInfoState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    change_eve_st = State()
+    user_first_name = State()
+    user_last_name = State()
+    student_name = State()
+
+
+class AddUserState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    student_name = State()
+
