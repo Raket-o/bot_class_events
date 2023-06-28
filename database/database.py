@@ -7,53 +7,64 @@ import json
 def init_db() -> None:
     """ Функция init_db. При отсутствии базы донной создаёт ёё. """
     with sqlite3.connect('database/database.db') as conn:
+    # with sqlite3.connect('database.db') as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             SELECT name FROM sqlite_master
-            WHERE type='table' AND name='table_events'; 
+            WHERE type='table' AND name='table_events';
             """
         )
         tab_event = cursor.fetchone()
 
-        # cursor.execute(
-        #     """
-        #     SELECT name FROM sqlite_master
-        #     WHERE type='table' AND name='table_users';
-        #     """
-        # )
-        # tab_users = cursor.fetchone()
+        cursor.execute(
+            """
+            SELECT name FROM sqlite_master
+            WHERE type='table' AND name='table_users';
+            """
+        )
+        tab_users = cursor.fetchone()
 
     # exists: Optional[tuple[str, ]] = cursor.fetchone()
     # now in `exist` we have tuple with table name if table really exists in DB
-
 
     if not tab_event:
         cursor.executescript(
             """
             CREATE TABLE `table_events` (
-                id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                user_id INTEGER DEFAULT 0,
-                user_name TEXT DEFAULT NULL,                   
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                author_id INTEGER DEFAULT 0,
+                user_name TEXT DEFAULT NULL,
                 name_event TEXT DEFAULT NULL,
-                description TEXT DEFAULT NULL,                
-                id_participants INTEGER,                                     
+                description TEXT DEFAULT NULL,
+                id_participants INTEGER
             )
             """
         )
+    # else:
+    #     cursor.execute("DROP TABLE table_events;")
 
-    # if not tab_users:
-    #     cursor.executescript(
-    #         """
-    #         CREATE TABLE `table_users` (
-    #             id INTEGER PRIMARY KEY AUTOINCREMENT,
-    #             user_id INTEGER DEFAULT 0,
-    #             user_name TEXT DEFAULT NULL,
-    #             password TEXT DEFAULT NULL,
-    #             blocked BOOL DEFAULT False,
-    #         )
-    #         """
-    #     )
+
+    if not tab_users:
+        cursor.executescript(
+            """
+            CREATE TABLE `table_users` (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                telegram_id INTEGER DEFAULT 0,
+                user_name TEXT DEFAULT NULL,
+                password TEXT DEFAULT NULL,
+                blocked BOOL DEFAULT False
+            )
+            """
+        )
+    # else:
+    #     cursor.execute("DROP TABLE table_users;")
+
+        cursor.execute(
+            """
+            INSERT INTO table_users (user_name, password) VALUES ("admin", "admin")
+            """
+        )
 
 
     conn.commit()
@@ -135,3 +146,6 @@ def init_db() -> None:
 #             """,
 #             (user_id, )
 #         )
+
+if __name__ == "__main__":
+    init_db()
