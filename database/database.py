@@ -34,7 +34,7 @@ def init_db() -> None:
             CREATE TABLE `table_events` (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 author_id INTEGER DEFAULT 0,
-                user_name TEXT DEFAULT NULL,
+                author_name TEXT DEFAULT NULL,
                 name_event TEXT DEFAULT NULL,
                 description TEXT DEFAULT NULL,
                 id_participants INTEGER
@@ -51,7 +51,9 @@ def init_db() -> None:
             CREATE TABLE `table_users` (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 telegram_id INTEGER DEFAULT 0,
-                user_name TEXT DEFAULT NULL,
+                user_first_name TEXT DEFAULT NULL,
+                user_last_name TEXT DEFAULT NULL,
+                student_name TEXT DEFAULT NULL,
                 password TEXT DEFAULT NULL,
                 blocked BOOL DEFAULT False
             )
@@ -62,12 +64,51 @@ def init_db() -> None:
 
         cursor.execute(
             """
-            INSERT INTO table_users (user_name, password) VALUES ("admin", "admin")
+            INSERT INTO table_users (student_name, password) VALUES ("Admin", "Admin")
             """
+        )
+    conn.commit()
+
+
+def check_password(*args):
+    try:
+        student_name, password = args[0][0], args[0][1]
+    except IndexError:
+        return None
+
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT id
+            FROM table_users
+            WHERE student_name == ? AND password == ?
+            """,
+            (student_name, password)
+        )
+        check_pass = cursor.fetchone()
+        return check_pass
+
+
+def update_info_for_db(telegram_id, user_first_name, user_last_name, id_student):
+    print(id_student)
+
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            UPDATE table_users
+            SET telegram_id = ?, user_first_name = ?, user_last_name = ?
+            WHERE student_name = ?;
+            """,
+            (telegram_id, user_first_name, user_last_name, id_student)
         )
 
 
-    conn.commit()
+    # SET telegram_id = {telegram_id}, user_first_name = {user_first_name}, user_last_name = {user_last_name}
+
+    # cursor.execute('''UPDATE books SET price = ? WHERE id = ?''', (newPrice, book_id))
+
 
     # if not exists:
     #     cursor.executescript(
