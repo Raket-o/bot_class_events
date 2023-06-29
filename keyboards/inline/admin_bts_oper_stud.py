@@ -18,7 +18,4 @@ def admin_bts_stud() -> InlineKeyboardMarkup:
             [InlineKeyboardButton("Вернуться назад", callback_data='main_menu')],
         ]
     )
-    # ], one_time_keyboard=True)
-
-    # ikeyboard.add(callback_main_menu())
     return ikeyboard

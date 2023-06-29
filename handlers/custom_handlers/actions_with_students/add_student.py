@@ -11,7 +11,7 @@ from database import database
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "add_students")
 async def operations_students(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
-    await message.message.answer('Введите фамилию и имя ученика\n (пример "Иванов Иван"):')
+    await message.message.answer('Введите фамилию и имя ученика\n (пример- Иванов Иван):')
     await AddUserState.student_name.set()
 
 

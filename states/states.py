@@ -44,3 +44,28 @@ class BlockUserState(StatesGroup):
     """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
     id = State()
 
+
+class EventState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    name = State()
+    deadline = State()
+    description = State()
+
+
+class EventEditState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    id = State()
+    name = State()
+    deadline = State()
+    description = State()
+
+
+class EventDelState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    id = State()
+
+
+
+
+
+

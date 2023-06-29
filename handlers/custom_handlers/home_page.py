@@ -11,8 +11,6 @@ from keyboards.reply.list_button import list_button
 from keyboards.inline import logout
 
 
-
-
 @dp.message_handler(state=UserInfoState.student_name)
 async def input_name(message: types.Message, state: FSMContext) -> None:
     input_text_user = message.text.title()
@@ -47,19 +45,25 @@ async def input_password(message: types.Message, state: FSMContext) -> None:
             student_name=input_text_user[0]
         )
 
-        list_events = database.get_evets()
-
-        if list_events:
-            kb = reply.list_button(list_events)
-            await message.answer('Текущие события:', reply_markup=kb)
-        else:
-            await message.answer('Событий нет.')
-
         if input_text_user[0] == "1":
             print("Login 'admin'")
             kb = admin_buttons.admin_bts()
             await message.answer('Админ меню:', reply_markup=kb)
+
+        else:
+            list_events = database.gets_events()
+            # print(list_events)
+            if list_events:
+                kb = reply.list_button.list_button(list_events)
+                await message.answer('Выберете событие:', reply_markup=kb)
+            else:
+                await message.answer('События ещё не добавлены.')
+
         await state.finish()
+
+
+
+
 
     else:
         await state.finish()

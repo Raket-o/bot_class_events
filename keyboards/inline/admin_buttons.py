@@ -8,13 +8,11 @@ def admin_bts() -> InlineKeyboardMarkup:
     Функция создания клавиатуры для модуля 'handlers.custom_handlers.show_history'
     :return: InlineKeyboardMarkup
     """
-    ikeyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton("Список событий",
-                              callback_data='operations_events')],
-        [InlineKeyboardButton("Список учеников",
-                              callback_data='operations_students')],
-        [InlineKeyboardButton("Выйти",
-                              callback_data='logout')]
-
-    ],)
+    ikeyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton("Список событий", callback_data='operations_events')],
+            [InlineKeyboardButton("Список учеников", callback_data='operations_students')],
+            [InlineKeyboardButton("Выйти", callback_data='logout')]
+        ],
+    )
     return ikeyboard

@@ -37,6 +37,7 @@ def init_db() -> None:
                 author_id INTEGER DEFAULT 0,
                 author_name TEXT DEFAULT NULL,
                 name_event TEXT DEFAULT NULL,
+                deadline DATE,
                 description TEXT DEFAULT NULL,
                 id_participants INTEGER
             )
@@ -114,7 +115,7 @@ def update_info_for_db(telegram_id, user_first_name, user_last_name, student_nam
         )
         conn.commit()
 
-def get_evets():
+def gets_events():
     with sqlite3.connect('database/database.db') as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
@@ -150,9 +151,7 @@ def add_student(name_student):
             """,
             (name_student, password, )
         )
-        list_users = cursor.fetchall()
         conn.commit()
-        return list_users
 
 
 def check_users_by_id(id):
@@ -166,8 +165,8 @@ def check_users_by_id(id):
             """,
             (id, )
         )
-        id_user = cursor.fetchone()
-        return id_user
+        user = cursor.fetchone()
+        return user
 
 
 def edit_users_by_id(id, name):
@@ -225,6 +224,75 @@ def blocked_users_by_id(id:int, status:bool) -> str:
             (status, id)
         )
         conn.commit()
+
+
+def add_event_db(name, deadline, description):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO table_events (name_event, deadline, description) VALUES (?, ?, ?);
+            """,
+            (name, deadline, description, )
+        )
+        conn.commit()
+
+
+def check_event_by_id(id):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT *
+            FROM table_events
+            WHERE id == ?
+            """,
+            (id, )
+        )
+        event = cursor.fetchone()
+        return event
+
+
+def edit_event_by_id(id, name, deadline, description):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            UPDATE table_events
+            SET name_event = ?, deadline = ?, description = ? 
+            WHERE id = ?;
+            """,
+            (name, deadline, description, id, )
+        )
+        conn.commit()
+
+
+def del_event_by_id(id:int) -> str:
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            DELETE FROM table_events 
+            WHERE id == ?            
+            """,
+            (id, )
+        )
+        conn.commit()
+
+
+
+# def blocked_users_by_id(id:int, status:bool) -> str:
+#     with sqlite3.connect('database/database.db') as conn:
+#         cursor: sqlite3.Cursor = conn.cursor()
+#         cursor.execute(
+#             """
+#             UPDATE table_users
+#             SET blocked = ?
+#             WHERE id = ?;
+#             """,
+#             (status, id)
+#         )
+#         conn.commit()
 
 
 def create_password():
