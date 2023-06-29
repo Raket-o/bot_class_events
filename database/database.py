@@ -2,6 +2,7 @@
 
 import sqlite3
 import json
+import random
 
 
 def init_db() -> None:
@@ -64,27 +65,37 @@ def init_db() -> None:
 
         cursor.execute(
             """
-            INSERT INTO table_users (student_name, password) VALUES ("Admin", "Admin")
+            INSERT INTO table_users (student_name, password) VALUES ("1", "1")
             """
         )
     conn.commit()
 
 
-def check_password(*args):
-    try:
-        student_name, password = args[0][0], args[0][1]
-    except IndexError:
-        return None
-
+def check_users(name):
     with sqlite3.connect('database/database.db') as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             SELECT id
             FROM table_users
-            WHERE student_name == ? AND password == ?
+            WHERE student_name == ?
             """,
-            (student_name, password)
+            (name, )
+        )
+        check_user = cursor.fetchall()
+        return check_user
+
+
+def check_password(student_name, password):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT id
+            FROM table_users
+            WHERE student_name == ? AND password == ? AND blocked == False
+            """,
+            (student_name, password, )
         )
         check_pass = cursor.fetchone()
         return check_pass
@@ -101,6 +112,7 @@ def update_info_for_db(telegram_id, user_first_name, user_last_name, student_nam
             """,
             (telegram_id, user_first_name, user_last_name, student_name)
         )
+        conn.commit()
 
 def get_evets():
     with sqlite3.connect('database/database.db') as conn:
@@ -127,17 +139,120 @@ def gets_students():
         list_users = cursor.fetchall()
         return list_users
 
+
 def add_student(name_student):
+    password = create_password()
     with sqlite3.connect('database/database.db') as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
-            INSERT INTO table_users (student_name) VALUES (?);
+            INSERT INTO table_users (student_name, password) VALUES (?, ?);
             """,
-            (name_student, )
+            (name_student, password, )
         )
         list_users = cursor.fetchall()
+        conn.commit()
         return list_users
+
+
+def check_users_by_id(id):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT *
+            FROM table_users
+            WHERE id == ?
+            """,
+            (id, )
+        )
+        id_user = cursor.fetchone()
+        return id_user
+
+
+def edit_users_by_id(id, name):
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            UPDATE table_users
+            SET student_name = ?
+            WHERE id = ?;
+            """,
+            (name, id)
+        )
+        conn.commit()
+
+
+def reset_password_users_by_id(id:int) -> str:
+    password = create_password()
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            UPDATE table_users
+            SET password = ?
+            WHERE id = ?;
+            """,
+            (password, id)
+        )
+        conn.commit()
+        return password
+
+
+def del_users_by_id(id:int) -> str:
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            DELETE FROM table_users 
+            WHERE id == ?            
+            """,
+            (id, )
+        )
+        conn.commit()
+
+
+def blocked_users_by_id(id:int, status:bool) -> str:
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            UPDATE table_users
+            SET blocked = ?
+            WHERE id = ?;
+            """,
+            (status, id)
+        )
+        conn.commit()
+
+
+def create_password():
+    password = ""
+    for i in range(8):
+        letter = chr(random.randrange(97, 122))
+        digital = chr(random.randrange(48, 55))
+        sym = random.choices((letter, (digital)))
+        password += sym[0]
+
+    with sqlite3.connect('database/database.db') as conn:
+        cursor: sqlite3.Cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT *
+            FROM table_users
+            WHERE password == ?
+            """,
+            (password, )
+        )
+        list_events = cursor.fetchall()
+
+        if not list_events:
+            return password
+        else:
+            create_password()
+
+
 
 
 
@@ -225,4 +340,7 @@ def add_student(name_student):
 #         )
 
 if __name__ == "__main__":
-    init_db()
+    # init_db()
+
+    print(create_password())
+

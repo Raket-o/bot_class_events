@@ -20,4 +20,5 @@ async def get_name_student(message: types.Message, state: FSMContext) -> None:
     database.add_student(message.text.title())
     kb = admin_bts_stud()
     await message.answer('Записал.', reply_markup=kb)
+    await state.finish()
 

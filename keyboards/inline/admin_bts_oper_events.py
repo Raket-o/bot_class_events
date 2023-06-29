@@ -1,6 +1,5 @@
 """Модуль создания клавиатуры."""
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from .back_main_menu import callback_main_menu
 
 
 def admin_bts_eve() -> InlineKeyboardMarkup:
@@ -18,6 +17,5 @@ def admin_bts_eve() -> InlineKeyboardMarkup:
         [InlineKeyboardButton("Удалить",
                               callback_data='delete_events')],
     ])
-    # ikeyboard.add(callback_main_menu())
     return ikeyboard
 

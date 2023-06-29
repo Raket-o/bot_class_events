@@ -27,8 +27,9 @@ async def main_menu(message: [types.CallbackQuery, types.Message], state: FSMCon
             status = "Разблокирован"
 
         await message.message.answer(
-            f"Ид: {i[0]}\n ФИ: {i[4]}\n Пароль: {i[5]}\n Статус: {status} \n***************"
+            f"Ид: {i[0]}\n ФИ: {i[4]}\n Пароль: {i[5]}\n Статус: {status}"
         )
 
     kb = admin_bts_stud()
     await message.message.answer('Админ меню:', reply_markup=kb)
+    await state.finish()

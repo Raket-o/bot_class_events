@@ -17,14 +17,17 @@ async def get_met_sort_low(message: types.Message, state: FSMContext) -> None:
     if input_text_user == "Ученики":
         print("Ученики")
         kb = admin_bts_stud()
+        await message.message.delete()
         await message.answer('Выберите действие.', reply_markup=kb)
 
     elif input_text_user == "События":
         print("События")
         kb = admin_bts_eve()
+        await message.message.delete()
         await message.answer('Выберите действие.', reply_markup=kb)
 
     else:
+        await message.message.delete()
         await message.answer('Непонятное действие, выберите из предложенных.')
 
 

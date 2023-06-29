@@ -1,6 +1,6 @@
 """Модуль создания клавиатуры."""
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
+from keyboards.inline.logout import logout_bts
 
 
 def admin_bts() -> InlineKeyboardMarkup:
@@ -12,8 +12,9 @@ def admin_bts() -> InlineKeyboardMarkup:
         [InlineKeyboardButton("Список событий",
                               callback_data='operations_events')],
         [InlineKeyboardButton("Список учеников",
-                              callback_data='operations_students')]
+                              callback_data='operations_students')],
+        [InlineKeyboardButton("Выйти",
+                              callback_data='logout')]
 
     ],)
-
     return ikeyboard

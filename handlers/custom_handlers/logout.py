@@ -8,11 +8,17 @@ from database import database
 from keyboards import reply
 from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
 from keyboards.reply.list_button import list_button
+from handlers.default_heandlers import start
 
 
-@dp.message_handler(text="Ученики")
-async def students(message: types.Message, state: FSMContext) -> None:
-    kb = admin_bts_stud()
-    await message.answer('Текущие события:', reply_markup=kb)
+@dp.callback_query_handler(lambda callback_query: callback_query.data == "logout")
+async def logout(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+#     """
+#     Функия main_menu. Каллбэка с датой main_menu запускает данную функцию.
+#     Завершает ожидание состояния и выводит текст (главного меню)
+#     """
 
+    await state.finish()
+    await message.message.answer(start.START_MESSAGE, parse_mode="HTML")
+    await UserInfoState.student_name.set()
 

@@ -12,10 +12,6 @@ async def main_menu(message: [types.CallbackQuery, types.Message], state: FSMCon
     Функия main_menu. Каллбэка с датой main_menu запускает данную функцию.
     Завершает ожидание состояния и выводит текст (главного меню)
     """
-    await state.finish()
     kb = admin_bts()
-    await message.message.answer(start.START_MESSAGE, parse_mode="HTML", reply_markup = kb)
-
-    # await message.message.answer(start.START_MESSAGE, parse_mode="HTML")
-    # await start.stars_command()
-
+    await message.message.answer("Админ меню:", parse_mode="HTML", reply_markup = kb)
+    await state.finish()
