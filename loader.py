@@ -25,4 +25,3 @@ async def on_shutdown(_):
 bot = Bot(token=config.BOT_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot=bot, storage=storage, loop=get_event_loop())
-

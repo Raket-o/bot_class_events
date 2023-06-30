@@ -12,6 +12,7 @@ def admin_bts() -> InlineKeyboardMarkup:
         inline_keyboard=[
             [InlineKeyboardButton("Список событий", callback_data='operations_events')],
             [InlineKeyboardButton("Список учеников", callback_data='operations_students')],
+            [InlineKeyboardButton("Сделать общую рассылку", callback_data='all_sending_message')],
             [InlineKeyboardButton("Выйти", callback_data='logout')]
         ],
     )

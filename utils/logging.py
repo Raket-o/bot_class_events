@@ -50,46 +50,38 @@ dict_config = {
             "level": "DEBUG",
             "handlers": ["console", "file_info_utils"]
         },
-        "logger_handler_high_low_price": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_get_meta_data": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
         "logger_loader": {
             "level": "DEBUG",
             "handlers": ["console", "file_info_utils"]
         },
-        "logger_handler_cmd_low": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_handler_cmd_high": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_handler_cmd_custom": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_handler_filter_price": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_handler_filter_meal_plan": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_handler_filter_amenities": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        },
-        "logger_handler_filter_star": {
-            "level": "ERROR",
-            "handlers": ["console", "file_errors_utils"]
-        }
+        # "logger_handler_cmd_low": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # },
+        # "logger_handler_cmd_high": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # },
+        # "logger_handler_cmd_custom": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # },
+        # "logger_handler_filter_price": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # },
+        # "logger_handler_filter_meal_plan": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # },
+        # "logger_handler_filter_amenities": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # },
+        # "logger_handler_filter_star": {
+        #     "level": "ERROR",
+        #     "handlers": ["console", "file_errors_utils"]
+        # }
     }
 }
 

@@ -9,6 +9,7 @@ class UserInfoState(StatesGroup):
     user_last_name = State()
     student_name = State()
     password = State()
+    comment = State()
 
 
 class AdminInfoState(StatesGroup):
@@ -63,6 +64,27 @@ class EventEditState(StatesGroup):
 class EventDelState(StatesGroup):
     """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
     id = State()
+
+
+class SendingMessageState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    message_text = State()
+
+
+class UserActionState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    # id_user = State()
+    name_student = State()
+    event = State()
+    name_event = State()
+    comment = State()
+
+
+class GetDetailEventState(StatesGroup):
+    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    id_event = State()
+
+
 
 
 

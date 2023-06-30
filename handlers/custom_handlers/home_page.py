@@ -1,7 +1,7 @@
 import logging
 from aiogram import types
 from loader import dp
-from states.states import UserInfoState, AdminInfoState
+from states.states import UserInfoState, AdminInfoState, UserActionState
 from aiogram.dispatcher import FSMContext
 from database import database
 
@@ -29,21 +29,27 @@ async def input_name(message: types.Message, state: FSMContext) -> None:
 @dp.message_handler(state=UserInfoState.password)
 async def input_password(message: types.Message, state: FSMContext) -> None:
     input_text_user = message.text
+    # print("input_text_user", input_text_user)
 
     async with state.proxy() as data:
-        name_user = data["name"]
+        student_name = data["name"]
 
-    if database.check_password(name_user, input_text_user):
+    # print("home_page| do check_password")
+    # print(message)
+    if database.check_password(student_name, input_text_user):
         user_id = message.from_id
         user_first_name = message.from_user.first_name
         user_last_name = message.from_user.last_name
+        # print(user_id, user_first_name, user_last_name)
 
         database.update_info_for_db(
             telegram_id=user_id,
             user_first_name=user_first_name,
             user_last_name=user_last_name,
-            student_name=input_text_user[0]
+            student_name=student_name
         )
+        await state.finish()
+
 
         if input_text_user[0] == "1":
             print("Login 'admin'")
@@ -51,25 +57,33 @@ async def input_password(message: types.Message, state: FSMContext) -> None:
             await message.answer('Админ меню:', reply_markup=kb)
 
         else:
+            # await state.finish()
+
+            print("Login 'user'")
             list_events = database.gets_events()
             # print(list_events)
             if list_events:
+                # await state.finish()
+
                 kb = reply.list_button.list_button(list_events)
-                await message.answer('Выберете событие:', reply_markup=kb)
+                await message.answer('Выберите событие:', reply_markup=kb)
+                # await state.finish()
+                await UserActionState.name_event.set()
+                # await state.finish()
+
+
             else:
-                await message.answer('События ещё не добавлены.')
+                await message.answer('События ещё не добавлены.') #  разлогиниться добавить кнопку выход
+                # await state.finish()
 
-        await state.finish()
+        # await UserActionState.name_event.set()
 
-
-
-
+        # await state.finish()
 
     else:
         await state.finish()
         kb = logout.logout_bts()
         await message.answer('Не правильный пароль.', reply_markup=kb)
-
 
 
 

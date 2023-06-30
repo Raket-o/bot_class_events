@@ -9,7 +9,8 @@ def admin_bts_eve() -> InlineKeyboardMarkup:
     """
     ikeyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton("Просмотреть", callback_data='get_events')],
+            [InlineKeyboardButton("Просмотреть список", callback_data='get_events')],
+            [InlineKeyboardButton("Просмотреть детально", callback_data='get_events_detal')],
             [InlineKeyboardButton("Создать", callback_data='add_events')],
             [InlineKeyboardButton("Редактировать", callback_data='edit_events')],
             [InlineKeyboardButton("Удалить", callback_data='delete_events')],
