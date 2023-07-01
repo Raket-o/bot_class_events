@@ -17,8 +17,8 @@ async def operations_students(message: [types.CallbackQuery, types.Message], sta
 
 @dp.message_handler(state=AddUserState.student_name)
 async def get_name_student(message: types.Message, state: FSMContext) -> None:
-    database.add_student(message.text.title())
+    password = database.add_student(message.text.title())
     kb = admin_bts_stud()
-    await message.answer('Записал.', reply_markup=kb)
+    await message.answer(f'Пользователь добавлен.\n Пароль для входа: {password}', reply_markup=kb)
     await state.finish()
 

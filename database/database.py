@@ -183,6 +183,7 @@ def add_student(name_student):
             (name_student, password, )
         )
         conn.commit()
+        return password
 
 
 def check_users_by_id(id):
