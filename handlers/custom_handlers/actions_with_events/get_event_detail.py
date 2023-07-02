@@ -28,7 +28,7 @@ async def get_events_detal_2(message: types.Message, state: FSMContext) -> None:
             # name_event, deadline, description, student_name, comment
             try:
                 await message.answer(
-                    f"Название: {event[0][0]}\n Дата завершения: {event[0][1]}\n Описание: {event[0][2]}\n"
+                    f"Название: {event[0][0]}\n Дата завершения: {event[0][1]}\n Описание: {event[0][2]}"
                 )
                 for i in event:
                     comment = i[4]
