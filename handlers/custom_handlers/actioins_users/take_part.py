@@ -1,3 +1,5 @@
+""" Модуль обработки каллбэка take_part"""
+
 from aiogram import types
 from loader import dp
 from aiogram.dispatcher import FSMContext
@@ -8,6 +10,11 @@ from keyboards.reply.list_button import list_button
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "take_part")
 async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+    """
+    Функия refuse_part_1. Каллбэк с датой refuse_part запускает данную функцию.
+    Проверяет, участвует ли ученик в событии. Если участвует,
+    сообщает "Вы уже приняли участие.". Иначе ожидает комментарий.
+    """
     async with state.proxy() as data:
         id_telegram = data["id_telegram"]
         event = data["event"]
@@ -29,6 +36,11 @@ async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMC
 
 @dp.message_handler(state=UserActionState.comment)
 async def take_part_2(message: types.Message, state: FSMContext) -> None:
+    """
+    Функия take_part_2. Запускается по изменению состояния.
+    Проверяет введённый текс. Если 0, то выводит список событий.
+    Иначе записывает текст в БД и выводит список событий.
+    """
     input_text = message.text.capitalize()
     async with state.proxy() as data:
         id_user = data["id_telegram"]

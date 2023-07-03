@@ -1,3 +1,5 @@
+""" Модуль обработки каллбэка edit_events"""
+
 from aiogram import types
 from loader import dp
 from aiogram.dispatcher import FSMContext

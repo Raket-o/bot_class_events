@@ -1,3 +1,5 @@
+""" Модуль просмотра события"""
+
 from aiogram import types
 from loader import dp
 from states.states import UserActionState
@@ -8,26 +10,16 @@ from keyboards.inline import logout
 
 
 @dp.message_handler(state=UserActionState.name_event)
-async def viw_event(message: types.Message, state: FSMContext) -> None:
+async def view_event(message: types.Message, state: FSMContext) -> None:
     """
-    Функций get_country. Проверяет введённое сообщение пользователя.
-    Если сообщение содержит только буквы, то записывается в хранилище-бота "country".
-    Далее вызывается функция get_meta_data.list_cities(message.text.title()) и передаёт
-    в неё название страны, возвращается список городов. После этот список передаётся
-    в функцию list_button.list_button(cites), возвращается клавиатура с названиями городов.
-    По окончанию печатает текст с клавиатурой, и меняет состояние UserInfoState.city.set().
-
-    :param message: types.Message
-    :param state: FSMContext
-    :return: None
+    Функций view_event. Запрашивает в базе событие по имени и выводит пользователю.
     """
 
     input_text = message.text
     event = database.get_event_by_name(input_text)
     if input_text == "Выйти":
         kb = logout.logout_bts()
-        await message.answer('Действительно хотите выйти?', reply_markup=kb
-        )
+        await message.answer('Действительно хотите выйти?', reply_markup=kb)
         await state.finish()
 
     if event:
@@ -35,7 +27,8 @@ async def viw_event(message: types.Message, state: FSMContext) -> None:
 
         kb = user_bts_eve()
         await message.answer(
-            f'Название: {event[0][3]}\n Дата: {event[0][4]}\n Описание: {event[0][5]}', reply_markup=kb
+            f'Название: {event[0][3]}\n Дата: {event[0][4]}\n Описание: {event[0][5]}',
+            reply_markup=kb
         )
         async with state.proxy() as data:
             data["id_telegram"] = message.from_id

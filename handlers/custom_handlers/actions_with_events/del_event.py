@@ -1,3 +1,5 @@
+""" Модуль обработки каллбэка delete_events"""
+
 from aiogram import types
 from loader import dp
 from aiogram.dispatcher import FSMContext
@@ -7,13 +9,20 @@ from keyboards.inline.admin_bts_oper_events import admin_bts_eve
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "delete_events")
-async def del_event_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+async def del_event_1(message: [types.CallbackQuery, types.Message]) -> None:
+    """
+    Функия del_event_1. Каллбэк с датой delete_events запускает данную функцию.
+    Ожидает состояние.
+    """
     await message.message.answer('Введите ИД:')
     await EventDelState.id.set()
 
 
 @dp.message_handler(state=EventDelState.id)
 async def del_event_2(message: types.Message, state: FSMContext) -> None:
+    """
+    Функия del_event_2. Проверяет, существует ли событие по ИД и удаляет его.
+    """
     try:
         id = int(message.text)
         data_user = database.check_event_by_id(id)
