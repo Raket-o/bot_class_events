@@ -1,5 +1,0 @@
-проверить изменение комменда от юзера
-
-установка зависимостей (библиотек) FOR /F %x IN (requirements.txt) DO ( IF NOT # == %x ( pip install %x ) )
-
-pip install -r requirements.txt
