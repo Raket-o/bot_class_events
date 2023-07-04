@@ -11,7 +11,7 @@ from keyboards.reply.list_button import list_button
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "take_part")
 async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
     """
-    Функия refuse_part_1. Каллбэк с датой refuse_part запускает данную функцию.
+    Функция refuse_part_1. Каллбэк с датой refuse_part запускает данную функцию.
     Проверяет, участвует ли ученик в событии. Если участвует,
     сообщает "Вы уже приняли участие.". Иначе ожидает комментарий.
     """
@@ -37,9 +37,9 @@ async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMC
 @dp.message_handler(state=UserActionState.comment)
 async def take_part_2(message: types.Message, state: FSMContext) -> None:
     """
-    Функия take_part_2. Запускается по изменению состояния.
+    Функция take_part_2. Запускается по изменению состояния.
     Проверяет введённый текс. Если 0, то выводит список событий.
-    Иначе записывает текст в БД и выводит список событий.
+    Иначе, записывает текст в БД и выводит список событий.
     """
     input_text = message.text.capitalize()
     async with state.proxy() as data:

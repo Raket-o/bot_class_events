@@ -10,17 +10,25 @@ import datetime
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "edit_events")
-async def edit_events_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+async def edit_events_1(message: [types.CallbackQuery, types.Message]) -> None:
+    """
+    Функция edit_events_1. Каллбэк с датой edit_events запускает данную функцию.
+    Ожидает состояние.
+    """
     await message.message.answer('Введите ИД:')
     await EventEditState.id.set()
 
 
 @dp.message_handler(state=EventEditState.id)
 async def edit_events_2(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция edit_events_2. Проверяет на валидность ИД события.
+    Ожидает состояние.
+    """
     try:
         id = int(message.text)
         data_event = database.check_event_by_id(id)
-        # print(data_event)
+
         if data_event:
             await message.answer('Новое название или введите цифру 0, чтоб его не изменять.')
 
@@ -30,9 +38,7 @@ async def edit_events_2(message: types.Message, state: FSMContext) -> None:
                 data["deadline"] = data_event[4]
                 data["description"] = data_event[5]
 
-
             await EventEditState.name.set()
-
         else:
             await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')
     except ValueError:
@@ -41,6 +47,11 @@ async def edit_events_2(message: types.Message, state: FSMContext) -> None:
 
 @dp.message_handler(state=EventEditState.name)
 async def edit_events_3(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция edit_events_3. Обновляет название события, если был введён 0,
+    то переходит к функции edit_events_4.
+    Ожидает состояние.
+    """
     input_text = message.text.capitalize()
 
     await message.answer('Новая дата (пример- 01.01.2023) или\n введите цифру 0, чтоб его не изменять.')
@@ -55,6 +66,11 @@ async def edit_events_3(message: types.Message, state: FSMContext) -> None:
 
 @dp.message_handler(state=EventEditState.deadline)
 async def edit_events_4(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция edit_events_5. Обновляет дату события, если был введён 0,
+    то переходит к функции edit_events_4.
+    Ожидает состояние.
+    """
     input_text = message.text
     if input_text != "0":
         try:
@@ -75,6 +91,11 @@ async def edit_events_4(message: types.Message, state: FSMContext) -> None:
 
 @dp.message_handler(state=EventEditState.description)
 async def edit_events_5(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция edit_events_5. Обновляет описание события, если был введён 0,
+    то записывает данные в БД.
+    Ожидает состояние.
+    """
     input_text = message.text
 
     if input_text != "0":

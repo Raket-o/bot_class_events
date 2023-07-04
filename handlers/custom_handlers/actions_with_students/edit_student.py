@@ -1,3 +1,5 @@
+""" Модуль обработки каллбэка с датой edit_students"""
+
 from aiogram import types
 from loader import dp
 from aiogram.dispatcher import FSMContext
@@ -7,13 +9,21 @@ from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "edit_students")
-async def edit_student(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+async def edit_student_1(message: [types.CallbackQuery, types.Message]) -> None:
+    """
+    Функция edit_student_1. Каллбэка с датой edit_students запускает данную функцию.
+    Ожидает состояние.
+    """
     await message.message.answer('Введите ИД:')
     await EditUserState.id.set()
 
 
 @dp.message_handler(state=EditUserState.id)
 async def edit_student_2(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция edit_student_2. Проверяет на валидность введённый ИД ученика.
+    Ожидает состояние.
+    """
     try:
         id = int(message.text)
         data_user = database.check_users_by_id(id)
@@ -34,6 +44,9 @@ async def edit_student_2(message: types.Message, state: FSMContext) -> None:
 
 @dp.message_handler(state=EditUserState.student_name)
 async def edit_student_3(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция edit_student_3. Вносит новое ФИ ученика.
+    """
     input_text_user = message.text.title()
 
     async with state.proxy() as data:

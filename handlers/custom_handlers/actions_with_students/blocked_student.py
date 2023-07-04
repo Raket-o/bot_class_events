@@ -1,3 +1,5 @@
+""" Модуль обработки каллбэка с датой main_menu"""
+
 from aiogram import types
 from loader import dp
 from aiogram.dispatcher import FSMContext
@@ -7,14 +9,21 @@ from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "blocked_students")
-async def blocked_student(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
-    print()
+async def blocked_student_1(message: [types.CallbackQuery, types.Message]) -> None:
+    """
+    Функция blocked_student_1. Каллбэка с датой blocked_students запускает данную функцию.
+    Ожидает состояние.
+    """
     await message.message.answer('Введите ИД:')
     await BlockUserState.id.set()
 
 
 @dp.message_handler(state=BlockUserState.id)
 async def blocked_student_2(message: types.Message, state: FSMContext) -> None:
+    """
+    Функция blocked_student_2. Проверяет на валидность введённый ИД ученика и
+    блокирует вход.
+    """
     try:
         id = int(message.text)
         data_user = database.check_users_by_id(id)
@@ -30,7 +39,6 @@ async def blocked_student_2(message: types.Message, state: FSMContext) -> None:
                 kb = admin_bts_stud()
                 await message.answer('Ученик разблокирован.', reply_markup=kb)
                 await state.finish()
-
 
         else:
             await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')

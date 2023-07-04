@@ -13,7 +13,7 @@ from utils.misc.sending_messages import sending_messages
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "add_events")
 async def add_event_1(message: [types.CallbackQuery, types.Message]) -> None:
     """
-    Функия add_event_1. Каллбэк с датой add_events запускает данную функцию.
+    Функция add_event_1. Каллбэк с датой add_events запускает данную функцию.
     Ожидает состояние.
     """
     await message.message.answer('Введите название события:')
@@ -23,7 +23,7 @@ async def add_event_1(message: [types.CallbackQuery, types.Message]) -> None:
 @dp.message_handler(state=EventState.name)
 async def add_event_2(message: types.Message, state: FSMContext) -> None:
     """
-    Функия add_event_2. Записывает текст пользователя в хранилище.
+    Функция add_event_2. Записывает текст пользователя в хранилище.
     """
     input_text = message.text.capitalize()
     async with state.proxy() as data:
@@ -35,7 +35,7 @@ async def add_event_2(message: types.Message, state: FSMContext) -> None:
 @dp.message_handler(state=EventState.deadline)
 async def add_event_3(message: types.Message, state: FSMContext) -> None:
     """
-    Функия add_event_2. Проверяет на валидность введённую дату
+    Функция add_event_2. Проверяет на валидность введённую дату
     и записывает в хранилище.
     """
     try:
@@ -53,7 +53,7 @@ async def add_event_3(message: types.Message, state: FSMContext) -> None:
 @dp.message_handler(state=EventState.description)
 async def add_event_3(message: types.Message, state: FSMContext) -> None:
     """
-    Функия add_event_3. Добавляет новое событие.
+    Функция add_event_3. Добавляет новое событие.
     """
     author_name = f"{message.from_user.first_name} {message.from_user.last_name}"
     async with state.proxy() as data:

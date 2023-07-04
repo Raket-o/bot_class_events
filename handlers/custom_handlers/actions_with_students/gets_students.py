@@ -1,23 +1,18 @@
-""" Модуль обработки каллбэка с датой main_menu"""
+""" Модуль обработки каллбэка с датой get_students"""
+
 from aiogram import types
 from loader import dp
 from aiogram.dispatcher import FSMContext
 from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
 from database import database
-from keyboards.reply import list_button
-from keyboards.inline import admin_buttons
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "get_students", state="*")
-async def main_menu(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
-
+async def gets_student(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
     """
-    Функия main_menu. Каллбэка с датой main_menu запускает данную функцию.
-    Завершает ожидание состояния и выводит текст (главного меню)
+    Функия gets_student. Каллбэка с датой get_students запускает данную функцию.
+    Выводит информацию по всем ученикам.
     """
-
-    # await message.message.delete()
-
     res = database.gets_students()
     await message.message.answer('Список учеников:\n')
     for i in res:

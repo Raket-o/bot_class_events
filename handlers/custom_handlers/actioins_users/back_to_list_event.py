@@ -11,7 +11,7 @@ from keyboards.reply.list_button import list_button
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "back_to_list_event")
 async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
     """
-    Функия take_part_1. Каллбэк с датой back_to_list_event запускает данную функцию.
+    Функция take_part_1. Каллбэк с датой back_to_list_event запускает данную функцию.
     Завершает ожидания состояния и возвращает к списку событий.
     """
     await state.finish()

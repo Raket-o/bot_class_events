@@ -14,7 +14,6 @@ async def view_event(message: types.Message, state: FSMContext) -> None:
     """
     Функций view_event. Запрашивает в базе событие по имени и выводит пользователю.
     """
-
     input_text = message.text
     event = database.get_event_by_name(input_text)
     if input_text == "Выйти":

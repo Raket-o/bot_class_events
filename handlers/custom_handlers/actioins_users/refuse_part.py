@@ -11,7 +11,7 @@ from keyboards.reply.list_button import list_button
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "refuse_part")
 async def refuse_part_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
     """
-    Функия refuse_part_1. Каллбэк с датой refuse_part запускает данную функцию.
+    Функция refuse_part_1. Каллбэк с датой refuse_part запускает данную функцию.
     Проверяет, участвует ли ученик в событии. Если участвует, отменяет заявку.
     Иначе сообщает "Вы не участвовали."
     """

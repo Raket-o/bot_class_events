@@ -1,4 +1,5 @@
 """Модуль хранения данных (состояний) пользователя"""
+
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
@@ -13,7 +14,7 @@ class UserInfoState(StatesGroup):
 
 
 class AdminInfoState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс AdminInfoState. Хранит информацию и данные вводимые пользователем"""
     change_eve_st = State()
     user_first_name = State()
     user_last_name = State()
@@ -21,23 +22,23 @@ class AdminInfoState(StatesGroup):
 
 
 class AddUserState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс AddUserState. Хранит информацию и данные вводимые пользователем"""
     student_name = State()
 
 
 class EditUserState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс EditUserState. Хранит информацию и данные вводимые пользователем"""
     id = State()
     student_name = State()
 
 
 class ResPassUserState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс ResPassUserState. Хранит информацию и данные вводимые пользователем"""
     id = State()
 
 
 class DelUserState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс DelUserState. Хранит информацию и данные вводимые пользователем"""
     id = State()
 
 
@@ -47,14 +48,14 @@ class BlockUserState(StatesGroup):
 
 
 class EventState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс EventState. Хранит информацию и данные вводимые пользователем"""
     name = State()
     deadline = State()
     description = State()
 
 
 class EventEditState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс EventEditState. Хранит информацию и данные вводимые пользователем"""
     id = State()
     name = State()
     deadline = State()
@@ -62,18 +63,17 @@ class EventEditState(StatesGroup):
 
 
 class EventDelState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс EventDelState. Хранит информацию и данные вводимые пользователем"""
     id = State()
 
 
 class SendingMessageState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс SendingMessageState. Хранит информацию и данные вводимые пользователем"""
     message_text = State()
 
 
 class UserActionState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
-    # id_user = State()
+    """ Класс UserActionState. Хранит информацию и данные вводимые пользователем"""
     name_student = State()
     event = State()
     name_event = State()
@@ -81,7 +81,7 @@ class UserActionState(StatesGroup):
 
 
 class GetDetailEventState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """ Класс GetDetailEventState. Хранит информацию и данные вводимые пользователем"""
     id_event = State()
 
 

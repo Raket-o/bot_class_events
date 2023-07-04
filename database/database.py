@@ -3,7 +3,8 @@
 import sqlite3
 import random
 import datetime
-from typing import List, Any
+from typing import Any
+from config_data.config import ADMIN_LOG, ADMIN_PASS
 
 
 def init_db() -> None:
@@ -73,10 +74,22 @@ def init_db() -> None:
             """
         )
 
+    cursor.execute(
+            """
+            SELECT id
+            FROM table_users
+            WHERE student_name == ? AND password == ?
+            """,
+            (ADMIN_LOG, ADMIN_PASS, )
+        )
+    check_admin = cursor.fetchall()
+
+    if not check_admin:
         cursor.execute(
             """
-            INSERT INTO table_users (student_name, password) VALUES ("1", "1")
-            """
+            INSERT INTO table_users (student_name, password) VALUES (?, ?)
+            """,
+            (ADMIN_LOG, ADMIN_PASS,)
         )
 
     if not tab_part_and_comm:
@@ -109,7 +122,7 @@ def check_users(name: str) -> list[Any]:
             FROM table_users
             WHERE student_name == ?
             """,
-            (name, )
+            (name,)
         )
         check_user = cursor.fetchall()
         return check_user
@@ -130,7 +143,7 @@ def check_password(student_name: str, password: str) -> list[Any]:
             FROM table_users
             WHERE student_name == ? AND password == ? AND blocked == False
             """,
-            (student_name, password, )
+            (student_name, password,)
         )
         check_pass = cursor.fetchone()
         return check_pass
@@ -209,7 +222,7 @@ def add_student(name_student: str) -> str:
             """
             INSERT INTO table_users (student_name, password) VALUES (?, ?);
             """,
-            (name_student, password, )
+            (name_student, password,)
         )
         conn.commit()
         return password
@@ -229,7 +242,7 @@ def check_users_by_id(id: int) -> list[Any]:
             FROM table_users
             WHERE id == ?
             """,
-            (id, )
+            (id,)
         )
         user = cursor.fetchone()
         return user
@@ -287,7 +300,7 @@ def del_users_by_id(id: int) -> None:
             DELETE FROM table_users 
             WHERE id == ?            
             """,
-            (id, )
+            (id,)
         )
         conn.commit()
 
@@ -313,7 +326,7 @@ def blocked_users_by_id(id: int, status: bool) -> None:
 
 def add_event_db(author_id: int,
                  author_name: str,
-                 name_event:str,
+                 name_event: str,
                  deadline: datetime,
                  description: str) -> None:
     """
@@ -330,7 +343,7 @@ def add_event_db(author_id: int,
             """
             INSERT INTO table_events (author_id, author_name, name_event, deadline, description) VALUES (?, ?, ?, ?, ?);
             """,
-            (author_id, author_name, name_event, deadline, description, )
+            (author_id, author_name, name_event, deadline, description,)
         )
         conn.commit()
 
@@ -349,7 +362,7 @@ def check_event_by_id(id: int) -> list[Any]:
             FROM table_events
             WHERE id == ?
             """,
-            (id, )
+            (id,)
         )
         event = cursor.fetchone()
         return event
@@ -374,7 +387,7 @@ def edit_event_by_id(id: int,
             SET name_event = ?, deadline = ?, description = ? 
             WHERE id = ?;
             """,
-            (name, deadline, description, id, )
+            (name, deadline, description, id,)
         )
         conn.commit()
 
@@ -391,7 +404,7 @@ def del_event_by_id(id: int) -> None:
             DELETE FROM table_events 
             WHERE id == ?            
             """,
-            (id, )
+            (id,)
         )
         conn.commit()
 
@@ -410,7 +423,7 @@ def get_event_by_name(name_event: str) -> list[Any]:
             FROM table_events 
             WHERE name_event == ?            
             """,
-            (name_event, )
+            (name_event,)
         )
         events = cursor.fetchall()
         return events
@@ -432,13 +445,13 @@ def check_participation(id_user: int, id_event: int) -> list[Any]:
             FROM table_part_and_comm
             WHERE id_telegram == ? AND id_event = ?;
             """,
-            (id_user, id_event, )
+            (id_user, id_event,)
         )
         rec_row = cursor.fetchall()
         return rec_row
 
 
-def del_participation(id_student:int, id_event:int) -> None:
+def del_participation(id_student: int, id_event: int) -> None:
     """
     Функция del_participation. Удаляет участника из события.
     :param id_student: ИД студента
@@ -451,12 +464,12 @@ def del_participation(id_student:int, id_event:int) -> None:
             DELETE FROM table_part_and_comm 
             WHERE id_telegram == ? AND id_event == ?
             """,
-            (id_student, id_event, )
+            (id_student, id_event,)
         )
         conn.commit()
 
 
-def add_participation(id_user: int, id_event: int, comment: str="None") -> None:
+def add_participation(id_user: int, id_event: int, comment: str = "None") -> None:
     """
     Функция add_participation. Добавляет участника к событию.
     :param id_user: ИД пользователя
@@ -469,7 +482,7 @@ def add_participation(id_user: int, id_event: int, comment: str="None") -> None:
             """
             INSERT INTO table_part_and_comm(id_telegram, id_event, comment) VALUES (?, ?, ?);
             """,
-            (id_user, id_event, comment, )
+            (id_user, id_event, comment,)
         )
         conn.commit()
 
@@ -488,7 +501,7 @@ def qty_part_event(id_event: int) -> list[Any]:
             FROM table_part_and_comm
             WHERE id_event == ?;
             """,
-            (id_event, )
+            (id_event,)
         )
         qty_part = cursor.fetchall()
         return qty_part
@@ -510,7 +523,7 @@ def get_detail_event(id_event: int) -> list[Any]:
                 JOIN table_users tu on tu.telegram_id = tpac.id_telegram
             WHERE id_event == ?;
             """,
-            (id_event, )
+            (id_event,)
         )
         event = cursor.fetchall()
         return event
@@ -536,7 +549,7 @@ def create_password() -> str:
             FROM table_users
             WHERE password == ?
             """,
-            (password, )
+            (password,)
         )
         list_events = cursor.fetchall()
 
