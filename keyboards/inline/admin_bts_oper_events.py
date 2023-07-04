@@ -4,7 +4,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def admin_bts_eve() -> InlineKeyboardMarkup:
     """
-    Функция создания клавиатуры для модуля 'handlers.custom_handlers.show_history'
+    Функция создания клавиатуры для действий с событиями
     :return: InlineKeyboardMarkup
     """
     ikeyboard = InlineKeyboardMarkup(

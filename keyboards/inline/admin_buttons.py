@@ -1,11 +1,10 @@
 """Модуль создания клавиатуры."""
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from keyboards.inline.logout import logout_bts
 
 
 def admin_bts() -> InlineKeyboardMarkup:
     """
-    Функция создания клавиатуры для модуля 'handlers.custom_handlers.show_history'
+    Функция создания клавиатуры для главного админ меню
     :return: InlineKeyboardMarkup
     """
     ikeyboard = InlineKeyboardMarkup(
