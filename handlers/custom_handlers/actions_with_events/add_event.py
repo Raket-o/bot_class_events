@@ -1,12 +1,14 @@
 """ Модуль обработки каллбэка add_events"""
 
 import datetime
+
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import EventState
-from keyboards.inline.admin_bts_oper_events import admin_bts_eve
+
 from database import database
+from keyboards.inline.admin_bts_oper_events import admin_bts_eve
+from loader import dp
+from states.states import EventState
 from utils.misc.sending_messages import sending_messages
 
 

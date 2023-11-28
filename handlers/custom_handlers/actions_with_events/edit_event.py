@@ -1,12 +1,14 @@
 """ Модуль обработки каллбэка edit_events"""
 
+import datetime
+
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import EventEditState
+
 from database import database
 from keyboards.inline.admin_bts_oper_events import admin_bts_eve
-import datetime
+from loader import dp
+from states.states import EventEditState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "edit_events")

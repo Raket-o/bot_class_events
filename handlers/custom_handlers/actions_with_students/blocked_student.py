@@ -1,11 +1,12 @@
 """ Модуль обработки каллбэка с датой main_menu"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import BlockUserState
+
 from database import database
 from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
+from loader import dp
+from states.states import BlockUserState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "blocked_students")

@@ -1,9 +1,9 @@
 """ Модуль команды /start"""
 
 from aiogram import types
+
 from loader import dp
 from states.states import UserInfoState
-
 
 START_MESSAGE = "<b>Введите фамилию и имя ученика</b>"
 

@@ -1,11 +1,12 @@
 """ Модуль обработки каллбэка с датой delete_students"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import DelUserState
+
 from database import database
 from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
+from loader import dp
+from states.states import DelUserState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "delete_students")

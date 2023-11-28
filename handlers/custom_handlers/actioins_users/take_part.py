@@ -1,11 +1,12 @@
 """ Модуль обработки каллбэка take_part"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import UserActionState
+
 from database import database
 from keyboards.reply.list_button import list_button
+from loader import dp
+from states.states import UserActionState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "take_part")

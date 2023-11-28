@@ -1,4 +1,1 @@
-from . import admin_buttons
-from . import admin_bts_oper_stud
-from . import admin_bts_oper_events
-from . import logout
+from . import admin_bts_oper_events, admin_bts_oper_stud, admin_buttons, logout

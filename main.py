@@ -1,12 +1,13 @@
 """ Модуль запуска телеграмм бота"""
 
 import logging
-from aiogram import executor
-from loader import dp, start_up, on_shutdown
-from handlers.default_heandlers import start
-from utils.logging import logger_root
-from database import database
 
+from aiogram import executor
+
+from database import database
+from handlers.default_heandlers import start
+from loader import dp, on_shutdown, start_up
+from utils.logging import logger_root
 
 logger = logging.getLogger("logger_main")
 

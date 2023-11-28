@@ -1,12 +1,13 @@
 """ Модуль просмотра события"""
 
 from aiogram import types
+from aiogram.dispatcher import FSMContext
+
+from database import database
+from keyboards.inline import logout
+from keyboards.inline.user_bts_oper_events import user_bts_eve
 from loader import dp
 from states.states import UserActionState
-from aiogram.dispatcher import FSMContext
-from database import database
-from keyboards.inline.user_bts_oper_events import user_bts_eve
-from keyboards.inline import logout
 
 
 @dp.message_handler(state=UserActionState.name_event)

@@ -1,10 +1,11 @@
 """ Модуль обработки каллбэка с датой logout"""
 
 from aiogram import types
+from aiogram.dispatcher import FSMContext
+
+from handlers.default_heandlers import start
 from loader import dp
 from states.states import UserInfoState
-from aiogram.dispatcher import FSMContext
-from handlers.default_heandlers import start
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "logout")

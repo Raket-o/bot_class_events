@@ -1,11 +1,12 @@
 """ Модуль обработки каллбэка с датой edit_pass_students"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import ResPassUserState
+
 from database import database
 from keyboards.inline.admin_bts_oper_stud import admin_bts_stud
+from loader import dp
+from states.states import ResPassUserState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "edit_pass_students")

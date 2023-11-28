@@ -1,16 +1,16 @@
 """ Модуль home_page. Распределяет доступ к админ меню и клиента."""
 
-from aiogram import types
-from loader import dp
-from states.states import UserInfoState, UserActionState
-from aiogram.dispatcher import FSMContext
-from database import database
-from keyboards import reply
-from keyboards.inline import admin_buttons
-from keyboards.inline import logout
-from config_data.config import ADMIN_LOG, ADMIN_PASS
 import logging
 
+from aiogram import types
+from aiogram.dispatcher import FSMContext
+
+from config_data.config import ADMIN_LOG, ADMIN_PASS
+from database import database
+from keyboards import reply
+from keyboards.inline import admin_buttons, logout
+from loader import dp
+from states.states import UserActionState, UserInfoState
 
 logger = logging.getLogger("logger_loader")
 

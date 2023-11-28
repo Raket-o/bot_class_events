@@ -1,6 +1,6 @@
 """Модуль генерации клавиатуры. Имя берётся из входящего списка."""
 
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
 
 def list_button(lst: list) -> ReplyKeyboardMarkup:

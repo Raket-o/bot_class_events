@@ -1,5 +1,2 @@
-from . import actions_with_students
-from . import actions_with_events
-from . import actioins_users
-from . import home_page
-from . import logout
+from . import (actioins_users, actions_with_events, actions_with_students,
+               home_page, logout)

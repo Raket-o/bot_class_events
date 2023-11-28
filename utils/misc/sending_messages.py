@@ -1,12 +1,12 @@
 """ Модуль массовой рассылки сообщения"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from loader import bot
+
 from database import database
-from states.states import SendingMessageState
 from keyboards.inline.admin_buttons import admin_bts
+from loader import bot, dp
+from states.states import SendingMessageState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "all_sending_message")

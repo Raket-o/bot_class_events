@@ -1,9 +1,10 @@
 """ Модуль работы с базой данных"""
 
-import sqlite3
-import random
 import datetime
+import random
+import sqlite3
 from typing import Any
+
 from config_data.config import ADMIN_LOG, ADMIN_PASS
 
 

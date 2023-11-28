@@ -1,10 +1,2 @@
-from . import operations_events
-from . import gets_events
-from . import add_event
-from . import edit_event
-from . import del_event
-from . import get_event_detail
-
-
-
-
+from . import (add_event, del_event, edit_event, get_event_detail, gets_events,
+               operations_events)

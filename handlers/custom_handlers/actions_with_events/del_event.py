@@ -1,11 +1,12 @@
 """ Модуль обработки каллбэка delete_events"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
-from states.states import EventDelState
+
 from database import database
 from keyboards.inline.admin_bts_oper_events import admin_bts_eve
+from loader import dp
+from states.states import EventDelState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "delete_events")

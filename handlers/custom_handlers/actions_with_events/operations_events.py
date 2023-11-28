@@ -1,9 +1,10 @@
 """ Модуль обработки каллбэка с датой operations_events"""
 
 from aiogram import types
-from loader import dp
 from aiogram.dispatcher import FSMContext
+
 from keyboards.inline.admin_bts_oper_events import admin_bts_eve
+from loader import dp
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "operations_events")
