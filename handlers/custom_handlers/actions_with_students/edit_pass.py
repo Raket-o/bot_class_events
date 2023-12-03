@@ -9,13 +9,15 @@ from loader import dp
 from states.states import ResPassUserState
 
 
-@dp.callback_query_handler(lambda callback_query: callback_query.data == "edit_pass_students")
+@dp.callback_query_handler(
+    lambda callback_query: callback_query.data == "edit_pass_students"
+)
 async def edit_student_1(message: [types.CallbackQuery, types.Message]) -> None:
     """
     Функция edit_student_1. Каллбэка с датой edit_pass_students запускает данную функцию.
     Ожидает состояние.
     """
-    await message.message.answer('Введите ИД:')
+    await message.message.answer("Введите ИД:")
     await ResPassUserState.id.set()
 
 
@@ -30,9 +32,9 @@ async def edit_student_2(message: types.Message, state: FSMContext) -> None:
         if data_user:
             new_password = database.reset_password_users_by_id(id)
             kb = admin_bts_stud()
-            await message.answer(f'Новый пароль: {new_password}', reply_markup=kb)
+            await message.answer(f"Новый пароль: {new_password}", reply_markup=kb)
             await state.finish()
         else:
-            await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')
+            await message.answer("Такой ИД я не нахожу. Попробуйте ещё раз.")
     except ValueError:
-        await message.answer('ИД может содержать только фиры. Попробуйте ещё раз.')
+        await message.answer("ИД может содержать только фиры. Попробуйте ещё раз.")

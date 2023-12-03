@@ -9,14 +9,16 @@ from loader import dp
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "get_events")
-async def get_events(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+async def get_events(
+    message: [types.CallbackQuery, types.Message], state: FSMContext
+) -> None:
     """
     Функция get_events. Каллбэка с датой get_events запускает данную функцию.
     Делает запрос и выводит все события.
     """
     res = database.gets_events()
 
-    await message.message.answer('Список событий:\n')
+    await message.message.answer("Список событий:\n")
     for i in res:
         qty_part = database.qty_part_event(i[0])
         await message.message.answer(
@@ -25,5 +27,5 @@ async def get_events(message: [types.CallbackQuery, types.Message], state: FSMCo
         )
 
     kb = admin_bts_eve()
-    await message.message.answer('Админ меню:', reply_markup=kb)
+    await message.message.answer("Админ меню:", reply_markup=kb)
     await state.finish()

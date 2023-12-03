@@ -8,7 +8,9 @@ from loader import dp
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "main_menu")
-async def main_menu(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+async def main_menu(
+    message: [types.CallbackQuery, types.Message], state: FSMContext
+) -> None:
     """
     Функция main_menu. Каллбэка с датой main_menu запускает данную функцию.
     Завершает ожидание состояния и клавиатуру "Админ меню"

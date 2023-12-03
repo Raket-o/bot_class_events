@@ -17,7 +17,7 @@ async def edit_events_1(message: [types.CallbackQuery, types.Message]) -> None:
     Функция edit_events_1. Каллбэк с датой edit_events запускает данную функцию.
     Ожидает состояние.
     """
-    await message.message.answer('Введите ИД:')
+    await message.message.answer("Введите ИД:")
     await EventEditState.id.set()
 
 
@@ -32,7 +32,9 @@ async def edit_events_2(message: types.Message, state: FSMContext) -> None:
         data_event = database.check_event_by_id(id)
 
         if data_event:
-            await message.answer('Новое название или введите цифру 0, чтоб его не изменять.')
+            await message.answer(
+                "Новое название или введите цифру 0, чтоб его не изменять."
+            )
 
             async with state.proxy() as data:
                 data["id"] = id
@@ -42,9 +44,9 @@ async def edit_events_2(message: types.Message, state: FSMContext) -> None:
 
             await EventEditState.name.set()
         else:
-            await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')
+            await message.answer("Такой ИД я не нахожу. Попробуйте ещё раз.")
     except ValueError:
-        await message.answer('ИД может содержать только фиры. Попробуйте ещё раз.')
+        await message.answer("ИД может содержать только фиры. Попробуйте ещё раз.")
 
 
 @dp.message_handler(state=EventEditState.name)
@@ -56,7 +58,9 @@ async def edit_events_3(message: types.Message, state: FSMContext) -> None:
     """
     input_text = message.text.capitalize()
 
-    await message.answer('Новая дата (пример- 01.01.2023) или\n введите цифру 0, чтоб его не изменять.')
+    await message.answer(
+        "Новая дата (пример- 01.01.2023) или\n введите цифру 0, чтоб его не изменять."
+    )
 
     if input_text != "0":
         async with state.proxy() as data:
@@ -82,12 +86,14 @@ async def edit_events_4(message: types.Message, state: FSMContext) -> None:
                 data["deadline"] = input_date
             await EventEditState.description.set()
 
-            await message.answer('Полное описание с ценами и прочим:')
+            await message.answer("Полное описание с ценами и прочим:")
         except ValueError:
-            await message.answer('Введена некорректная дата. НЕ ИЗМЕНЕНО!')
+            await message.answer("Введена некорректная дата. НЕ ИЗМЕНЕНО!")
 
     else:
-        await message.answer('Новое описание или или введите цифру 0, чтоб его не изменять')
+        await message.answer(
+            "Новое описание или или введите цифру 0, чтоб его не изменять"
+        )
         await EventEditState.description.set()
 
 
@@ -104,24 +110,18 @@ async def edit_events_5(message: types.Message, state: FSMContext) -> None:
         async with state.proxy() as data:
             data["description"] = input_text
             database.edit_event_by_id(
-                data["id"],
-                data["name"],
-                data["deadline"],
-                data["description"]
+                data["id"], data["name"], data["deadline"], data["description"]
             )
 
         kb = admin_bts_eve()
-        await message.answer('Изменения внесены.', reply_markup=kb)
+        await message.answer("Изменения внесены.", reply_markup=kb)
         await state.finish()
 
     else:
         async with state.proxy() as data:
             database.edit_event_by_id(
-                data["id"],
-                data["name"],
-                data["deadline"],
-                data["description"]
+                data["id"], data["name"], data["deadline"], data["description"]
             )
         kb = admin_bts_eve()
-        await message.answer('Изменения внесены.', reply_markup=kb)
+        await message.answer("Изменения внесены.", reply_markup=kb)
         await state.finish()

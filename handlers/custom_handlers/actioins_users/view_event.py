@@ -19,7 +19,7 @@ async def view_event(message: types.Message, state: FSMContext) -> None:
     event = database.get_event_by_name(input_text)
     if input_text == "Выйти":
         kb = logout.logout_bts()
-        await message.answer('Действительно хотите выйти?', reply_markup=kb)
+        await message.answer("Действительно хотите выйти?", reply_markup=kb)
         await state.finish()
 
     if event:
@@ -27,12 +27,12 @@ async def view_event(message: types.Message, state: FSMContext) -> None:
 
         kb = user_bts_eve()
         await message.answer(
-            f'Название: {event[0][3]}\n Дата: {event[0][4]}\n Описание: {event[0][5]}',
-            reply_markup=kb
+            f"Название: {event[0][3]}\n Дата: {event[0][4]}\n Описание: {event[0][5]}",
+            reply_markup=kb,
         )
         async with state.proxy() as data:
             data["id_telegram"] = message.from_id
             data["event"] = event
 
     elif not event and input_text != "Выйти":
-        await message.answer('Нет информации. Пожалуйста, выберете другое событие.')
+        await message.answer("Нет информации. Пожалуйста, выберете другое событие.")

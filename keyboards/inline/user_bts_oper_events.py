@@ -9,17 +9,17 @@ def user_bts_eve() -> InlineKeyboardMarkup:
     """
     ikeyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(
-                "Принять участие",
-                callback_data='take_part')
+            [InlineKeyboardButton("Принять участие", callback_data="take_part")],
+            [
+                InlineKeyboardButton(
+                    "Отказаться от участия", callback_data="refuse_part"
+                )
             ],
-            [InlineKeyboardButton(
-                "Отказаться от участия",
-                callback_data='refuse_part')
+            [
+                InlineKeyboardButton(
+                    "Вернуться назад", callback_data="back_to_list_event"
+                )
             ],
-            [InlineKeyboardButton(
-                "Вернуться назад", callback_data='back_to_list_event')
-            ]
         ]
     )
     return ikeyboard

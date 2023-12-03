@@ -9,13 +9,15 @@ from loader import dp
 from states.states import EventDelState
 
 
-@dp.callback_query_handler(lambda callback_query: callback_query.data == "delete_events")
+@dp.callback_query_handler(
+    lambda callback_query: callback_query.data == "delete_events"
+)
 async def del_event_1(message: [types.CallbackQuery, types.Message]) -> None:
     """
     Функция del_event_1. Каллбэк с датой delete_events запускает данную функцию.
     Ожидает состояние.
     """
-    await message.message.answer('Введите ИД:')
+    await message.message.answer("Введите ИД:")
     await EventDelState.id.set()
 
 
@@ -30,9 +32,9 @@ async def del_event_2(message: types.Message, state: FSMContext) -> None:
         if data_user:
             database.del_event_by_id(id)
             kb = admin_bts_eve()
-            await message.answer('Событие удалённо.', reply_markup=kb)
+            await message.answer("Событие удалённо.", reply_markup=kb)
             await state.finish()
         else:
-            await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')
+            await message.answer("Такой ИД я не нахожу. Попробуйте ещё раз.")
     except ValueError:
-        await message.answer('ИД может содержать только фиры. Попробуйте ещё раз.')
+        await message.answer("ИД может содержать только фиры. Попробуйте ещё раз.")

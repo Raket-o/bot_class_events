@@ -1,7 +1,7 @@
 """ Модуль инициализации телеграмм бота"""
 
 import logging
-# from logging import Logger
+
 from asyncio import get_event_loop
 
 from aiogram import Bot, Dispatcher, executor, types

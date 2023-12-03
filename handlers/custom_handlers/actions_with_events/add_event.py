@@ -18,7 +18,7 @@ async def add_event_1(message: [types.CallbackQuery, types.Message]) -> None:
     Функция add_event_1. Каллбэк с датой add_events запускает данную функцию.
     Ожидает состояние.
     """
-    await message.message.answer('Введите название события:')
+    await message.message.answer("Введите название события:")
     await EventState.name.set()
 
 
@@ -30,7 +30,7 @@ async def add_event_2(message: types.Message, state: FSMContext) -> None:
     input_text = message.text.capitalize()
     async with state.proxy() as data:
         data["name"] = input_text
-    await message.answer('Введите даты окончания\n (пример- 01.01.2023).')
+    await message.answer("Введите даты окончания\n (пример- 01.01.2023).")
     await EventState.deadline.set()
 
 
@@ -47,9 +47,9 @@ async def add_event_3(message: types.Message, state: FSMContext) -> None:
             data["deadline"] = input_date
         await EventState.description.set()
 
-        await message.answer('Полное описание с ценами и прочим:')
+        await message.answer("Полное описание с ценами и прочим:")
     except ValueError:
-        await message.answer('Введена некорректная дата.\n (пример- 01.01.2023).')
+        await message.answer("Введена некорректная дата.\n (пример- 01.01.2023).")
 
 
 @dp.message_handler(state=EventState.description)
@@ -65,10 +65,12 @@ async def add_event_3(message: types.Message, state: FSMContext) -> None:
             author_name=author_name,
             name_event=data["name"],
             deadline=data["deadline"],
-            description=data["description"]
+            description=data["description"],
         )
-        await sending_messages(text_message=f'Добавлено новое событие: <b>{data["name"]}</b>')
+        await sending_messages(
+            text_message=f'Добавлено новое событие: <b>{data["name"]}</b>'
+        )
 
     kb = admin_bts_eve()
-    await message.answer('Записал.', reply_markup=kb)
+    await message.answer("Записал.", reply_markup=kb)
     await state.finish()

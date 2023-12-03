@@ -10,7 +10,9 @@ from states.states import UserActionState
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data == "take_part")
-async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMContext) -> None:
+async def take_part_1(
+    message: [types.CallbackQuery, types.Message], state: FSMContext
+) -> None:
     """
     Функция refuse_part_1. Каллбэк с датой refuse_part запускает данную функцию.
     Проверяет, участвует ли ученик в событии. Если участвует,
@@ -19,19 +21,23 @@ async def take_part_1(message: [types.CallbackQuery, types.Message], state: FSMC
     async with state.proxy() as data:
         id_telegram = data["id_telegram"]
         event = data["event"]
-    participation = database.check_participation(id_user=id_telegram, id_event=event[0][0])
+    participation = database.check_participation(
+        id_user=id_telegram, id_event=event[0][0]
+    )
     if participation:
-        await message.message.answer('Вы уже приняли участие.')
+        await message.message.answer("Вы уже приняли участие.")
         await state.finish()
 
         list_events = database.gets_events()
         if list_events:
             kb = list_button(list_events)
-            await message.message.answer('Выберите событие:', reply_markup=kb)
+            await message.message.answer("Выберите событие:", reply_markup=kb)
             await UserActionState.name_event.set()
 
     else:
-        await message.message.answer('Напишите комментарий (чтобы пропустить поставьте 0)')
+        await message.message.answer(
+            "Напишите комментарий (чтобы пропустить поставьте 0)"
+        )
         await UserActionState.comment.set()
 
 
@@ -48,27 +54,29 @@ async def take_part_2(message: types.Message, state: FSMContext) -> None:
         event = data["event"]
 
     if input_text != "0":
-        await message.answer('Вы приняли участие. Комментарий записан.')
-        database.add_participation(id_user=id_user, id_event=event[0][0], comment=input_text)
+        await message.answer("Вы приняли участие. Комментарий записан.")
+        database.add_participation(
+            id_user=id_user, id_event=event[0][0], comment=input_text
+        )
         await state.finish()
 
         list_events = database.gets_events()
         if list_events:
             kb = list_button(list_events)
-            await message.answer('Выберите событие:', reply_markup=kb)
+            await message.answer("Выберите событие:", reply_markup=kb)
             await UserActionState.name_event.set()
         else:
-            await message.answer('События ещё не добавлены.')
+            await message.answer("События ещё не добавлены.")
 
     else:
-        await message.answer('Вы приняли участие.')
+        await message.answer("Вы приняли участие.")
         database.add_participation(id_user=id_user, id_event=event[0][0])
         await state.finish()
 
         list_events = database.gets_events()
         if list_events:
             kb = list_button(list_events)
-            await message.answer('Выберите событие:', reply_markup=kb)
+            await message.answer("Выберите событие:", reply_markup=kb)
             await UserActionState.name_event.set()
         else:
-            await message.answer('События ещё не добавлены.')
+            await message.answer("События ещё не добавлены.")

@@ -9,9 +9,8 @@ from config_data.config import ADMIN_LOG, ADMIN_PASS
 
 
 def init_db() -> None:
-    """ Функция init_db. При отсутствии базы донной создаёт ёё. """
-    with sqlite3.connect('database/database.db') as conn:
-
+    """Функция init_db. При отсутствии базы донной создаёт ёё."""
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -41,9 +40,6 @@ def init_db() -> None:
         """
     )
     tab_part_and_comm = cursor.fetchone()
-
-    # exists: Optional[tuple[str, ]] = cursor.fetchone()
-    # now in `exist` we have tuple with table name if table really exists in DB
 
     if not tab_event:
         cursor.executescript(
@@ -76,13 +72,16 @@ def init_db() -> None:
         )
 
     cursor.execute(
-            """
+        """
             SELECT id
             FROM table_users
             WHERE student_name == ? AND password == ?
             """,
-            (ADMIN_LOG, ADMIN_PASS, )
-        )
+        (
+            ADMIN_LOG,
+            ADMIN_PASS,
+        ),
+    )
     check_admin = cursor.fetchall()
 
     if not check_admin:
@@ -90,7 +89,10 @@ def init_db() -> None:
             """
             INSERT INTO table_users (student_name, password) VALUES (?, ?)
             """,
-            (ADMIN_LOG, ADMIN_PASS,)
+            (
+                ADMIN_LOG,
+                ADMIN_PASS,
+            ),
         )
 
     if not tab_part_and_comm:
@@ -115,7 +117,7 @@ def check_users(name: str) -> list[Any]:
     :param name: Введённое имя (при логине)
     :return: Результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -123,7 +125,7 @@ def check_users(name: str) -> list[Any]:
             FROM table_users
             WHERE student_name == ?
             """,
-            (name,)
+            (name,),
         )
         check_user = cursor.fetchall()
         return check_user
@@ -136,7 +138,7 @@ def check_password(student_name: str, password: str) -> list[Any]:
     :param password: Введённый пароль (при логине)
     :return: Результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -144,16 +146,18 @@ def check_password(student_name: str, password: str) -> list[Any]:
             FROM table_users
             WHERE student_name == ? AND password == ? AND blocked == False
             """,
-            (student_name, password,)
+            (
+                student_name,
+                password,
+            ),
         )
         check_pass = cursor.fetchone()
         return check_pass
 
 
-def update_info_for_db(telegram_id: int,
-                       user_first_name: str,
-                       user_last_name: str,
-                       student_name: str) -> None:
+def update_info_for_db(
+    telegram_id: int, user_first_name: str, user_last_name: str, student_name: str
+) -> None:
     """
     Функция update_info_for_db. При логине, обновляет данные.
     :param telegram_id: ИД телеграмма
@@ -163,7 +167,7 @@ def update_info_for_db(telegram_id: int,
     """
     cur_datetime = datetime.datetime.now().replace(microsecond=0)
 
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -171,7 +175,7 @@ def update_info_for_db(telegram_id: int,
             SET telegram_id = ?, user_first_name = ?, user_last_name = ?, last_login = ?
             WHERE student_name = ?;
             """,
-            (telegram_id, user_first_name, user_last_name, cur_datetime, student_name)
+            (telegram_id, user_first_name, user_last_name, cur_datetime, student_name),
         )
         conn.commit()
 
@@ -181,7 +185,7 @@ def gets_events() -> list[Any]:
     Функция gets_events. Находит все события и возвращает их.
     :return: Список событий
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -198,7 +202,7 @@ def gets_students() -> list[Any]:
     Функция gets_events. Находит всех школьников и возвращает их.
     :return: Список пользователей
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -217,13 +221,16 @@ def add_student(name_student: str) -> str:
     :return: сгенерированный пароль
     """
     password = create_password()
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             INSERT INTO table_users (student_name, password) VALUES (?, ?);
             """,
-            (name_student, password,)
+            (
+                name_student,
+                password,
+            ),
         )
         conn.commit()
         return password
@@ -235,7 +242,7 @@ def check_users_by_id(id: int) -> list[Any]:
     :param id: ИД пользователя
     :return: результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -243,7 +250,7 @@ def check_users_by_id(id: int) -> list[Any]:
             FROM table_users
             WHERE id == ?
             """,
-            (id,)
+            (id,),
         )
         user = cursor.fetchone()
         return user
@@ -255,7 +262,7 @@ def edit_users_by_id(id: int, name: str) -> None:
     :param id: ИД пользователя
     :param name: Имя школьника
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -263,7 +270,7 @@ def edit_users_by_id(id: int, name: str) -> None:
             SET student_name = ?
             WHERE id = ?;
             """,
-            (name, id)
+            (name, id),
         )
         conn.commit()
 
@@ -275,7 +282,7 @@ def reset_password_users_by_id(id: int) -> str:
     :return: новый сгенерированный пароль
     """
     password = create_password()
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -283,7 +290,7 @@ def reset_password_users_by_id(id: int) -> str:
             SET password = ?
             WHERE id = ?;
             """,
-            (password, id)
+            (password, id),
         )
         conn.commit()
         return password
@@ -294,14 +301,14 @@ def del_users_by_id(id: int) -> None:
     Функция del_users_by_id. Удаляет пользователя.
     :param id: ИД пользователя
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             DELETE FROM table_users 
             WHERE id == ?            
             """,
-            (id,)
+            (id,),
         )
         conn.commit()
 
@@ -312,7 +319,7 @@ def blocked_users_by_id(id: int, status: bool) -> None:
     :param id: ИД пользователя
     :param status: Статус пользователя
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -320,16 +327,18 @@ def blocked_users_by_id(id: int, status: bool) -> None:
             SET blocked = ?
             WHERE id = ?;
             """,
-            (status, id)
+            (status, id),
         )
         conn.commit()
 
 
-def add_event_db(author_id: int,
-                 author_name: str,
-                 name_event: str,
-                 deadline: datetime,
-                 description: str) -> None:
+def add_event_db(
+    author_id: int,
+    author_name: str,
+    name_event: str,
+    deadline: datetime,
+    description: str,
+) -> None:
     """
     Функция add_event_db. Добавляет новое событие.
     :param author_id: ИД автора
@@ -338,13 +347,19 @@ def add_event_db(author_id: int,
     :param deadline: Крайний срок события
     :param description: Описание
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             INSERT INTO table_events (author_id, author_name, name_event, deadline, description) VALUES (?, ?, ?, ?, ?);
             """,
-            (author_id, author_name, name_event, deadline, description,)
+            (
+                author_id,
+                author_name,
+                name_event,
+                deadline,
+                description,
+            ),
         )
         conn.commit()
 
@@ -355,7 +370,7 @@ def check_event_by_id(id: int) -> list[Any]:
     :param id: ИД события
     :return: результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -363,16 +378,13 @@ def check_event_by_id(id: int) -> list[Any]:
             FROM table_events
             WHERE id == ?
             """,
-            (id,)
+            (id,),
         )
         event = cursor.fetchone()
         return event
 
 
-def edit_event_by_id(id: int,
-                     name: str,
-                     deadline: datetime,
-                     description: str) -> None:
+def edit_event_by_id(id: int, name: str, deadline: datetime, description: str) -> None:
     """
     Функция edit_event_by_id. Изменяет данные о событии.
     :param id: ИД события
@@ -380,7 +392,7 @@ def edit_event_by_id(id: int,
     :param deadline: Крайний срок события
     :param description: Описание
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -388,7 +400,12 @@ def edit_event_by_id(id: int,
             SET name_event = ?, deadline = ?, description = ? 
             WHERE id = ?;
             """,
-            (name, deadline, description, id,)
+            (
+                name,
+                deadline,
+                description,
+                id,
+            ),
         )
         conn.commit()
 
@@ -398,14 +415,14 @@ def del_event_by_id(id: int) -> None:
     Функция del_event_by_id. Удаляет событие.
     :param id: ИД события
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             DELETE FROM table_events 
             WHERE id == ?            
             """,
-            (id,)
+            (id,),
         )
         conn.commit()
 
@@ -416,7 +433,7 @@ def get_event_by_name(name_event: str) -> list[Any]:
     :param name_event: Название события
     :return: результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -424,7 +441,7 @@ def get_event_by_name(name_event: str) -> list[Any]:
             FROM table_events 
             WHERE name_event == ?            
             """,
-            (name_event,)
+            (name_event,),
         )
         events = cursor.fetchall()
         return events
@@ -438,7 +455,7 @@ def check_participation(id_user: int, id_event: int) -> list[Any]:
     :param id_event: ИД события
     :return: результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -446,7 +463,10 @@ def check_participation(id_user: int, id_event: int) -> list[Any]:
             FROM table_part_and_comm
             WHERE id_telegram == ? AND id_event = ?;
             """,
-            (id_user, id_event,)
+            (
+                id_user,
+                id_event,
+            ),
         )
         rec_row = cursor.fetchall()
         return rec_row
@@ -458,14 +478,17 @@ def del_participation(id_student: int, id_event: int) -> None:
     :param id_student: ИД студента
     :param id_event: ИД события
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             DELETE FROM table_part_and_comm 
             WHERE id_telegram == ? AND id_event == ?
             """,
-            (id_student, id_event,)
+            (
+                id_student,
+                id_event,
+            ),
         )
         conn.commit()
 
@@ -477,13 +500,17 @@ def add_participation(id_user: int, id_event: int, comment: str = "None") -> Non
     :param id_event: ИД события
     :param comment: Комментарий пользователя
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
             INSERT INTO table_part_and_comm(id_telegram, id_event, comment) VALUES (?, ?, ?);
             """,
-            (id_user, id_event, comment,)
+            (
+                id_user,
+                id_event,
+                comment,
+            ),
         )
         conn.commit()
 
@@ -494,7 +521,7 @@ def qty_part_event(id_event: int) -> list[Any]:
     :param id_event: ИД события
     :return: Результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -502,7 +529,7 @@ def qty_part_event(id_event: int) -> list[Any]:
             FROM table_part_and_comm
             WHERE id_event == ?;
             """,
-            (id_event,)
+            (id_event,),
         )
         qty_part = cursor.fetchall()
         return qty_part
@@ -514,7 +541,7 @@ def get_detail_event(id_event: int) -> list[Any]:
     :param id_event: ИД события
     :return: Результат поиска
     """
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -524,7 +551,7 @@ def get_detail_event(id_event: int) -> list[Any]:
                 JOIN table_users tu on tu.telegram_id = tpac.id_telegram
             WHERE id_event == ?;
             """,
-            (id_event,)
+            (id_event,),
         )
         event = cursor.fetchall()
         return event
@@ -542,7 +569,7 @@ def create_password() -> str:
         sym = random.choices((letter, digital))
         password += sym[0]
 
-    with sqlite3.connect('database/database.db') as conn:
+    with sqlite3.connect("database/database.db") as conn:
         cursor: sqlite3.Cursor = conn.cursor()
         cursor.execute(
             """
@@ -550,7 +577,7 @@ def create_password() -> str:
             FROM table_users
             WHERE password == ?
             """,
-            (password,)
+            (password,),
         )
         list_events = cursor.fetchall()
 
@@ -558,5 +585,3 @@ def create_password() -> str:
             return password
         else:
             create_password()
-
-# 1115733873

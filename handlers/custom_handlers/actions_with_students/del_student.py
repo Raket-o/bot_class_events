@@ -9,13 +9,15 @@ from loader import dp
 from states.states import DelUserState
 
 
-@dp.callback_query_handler(lambda callback_query: callback_query.data == "delete_students")
+@dp.callback_query_handler(
+    lambda callback_query: callback_query.data == "delete_students"
+)
 async def del_student(message: [types.CallbackQuery, types.Message]) -> None:
     """
     Функция del_student. Каллбэка с датой delete_students запускает данную функцию.
     Ожидает состояние.
     """
-    await message.message.answer('Введите ИД:')
+    await message.message.answer("Введите ИД:")
     await DelUserState.id.set()
 
 
@@ -31,9 +33,9 @@ async def del_student_2(message: types.Message, state: FSMContext) -> None:
         if data_user:
             database.del_users_by_id(id)
             kb = admin_bts_stud()
-            await message.answer('Ученик удалён.', reply_markup=kb)
+            await message.answer("Ученик удалён.", reply_markup=kb)
             await state.finish()
         else:
-            await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')
+            await message.answer("Такой ИД я не нахожу. Попробуйте ещё раз.")
     except ValueError:
-        await message.answer('ИД может содержать только фиры. Попробуйте ещё раз.')
+        await message.answer("ИД может содержать только фиры. Попробуйте ещё раз.")

@@ -4,7 +4,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
 class UserInfoState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+
     telegram_id = State()
     user_first_name = State()
     user_last_name = State()
@@ -14,7 +15,8 @@ class UserInfoState(StatesGroup):
 
 
 class AdminInfoState(StatesGroup):
-    """ Класс AdminInfoState. Хранит информацию и данные вводимые пользователем"""
+    """Класс AdminInfoState. Хранит информацию и данные вводимые пользователем"""
+
     change_eve_st = State()
     user_first_name = State()
     user_last_name = State()
@@ -22,40 +24,47 @@ class AdminInfoState(StatesGroup):
 
 
 class AddUserState(StatesGroup):
-    """ Класс AddUserState. Хранит информацию и данные вводимые пользователем"""
+    """Класс AddUserState. Хранит информацию и данные вводимые пользователем"""
+
     student_name = State()
 
 
 class EditUserState(StatesGroup):
-    """ Класс EditUserState. Хранит информацию и данные вводимые пользователем"""
+    """Класс EditUserState. Хранит информацию и данные вводимые пользователем"""
+
     id = State()
     student_name = State()
 
 
 class ResPassUserState(StatesGroup):
-    """ Класс ResPassUserState. Хранит информацию и данные вводимые пользователем"""
+    """Класс ResPassUserState. Хранит информацию и данные вводимые пользователем"""
+
     id = State()
 
 
 class DelUserState(StatesGroup):
-    """ Класс DelUserState. Хранит информацию и данные вводимые пользователем"""
+    """Класс DelUserState. Хранит информацию и данные вводимые пользователем"""
+
     id = State()
 
 
 class BlockUserState(StatesGroup):
-    """ Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+    """Класс UserInfoState. Хранит информацию и данные вводимые пользователем"""
+
     id = State()
 
 
 class EventState(StatesGroup):
-    """ Класс EventState. Хранит информацию и данные вводимые пользователем"""
+    """Класс EventState. Хранит информацию и данные вводимые пользователем"""
+
     name = State()
     deadline = State()
     description = State()
 
 
 class EventEditState(StatesGroup):
-    """ Класс EventEditState. Хранит информацию и данные вводимые пользователем"""
+    """Класс EventEditState. Хранит информацию и данные вводимые пользователем"""
+
     id = State()
     name = State()
     deadline = State()
@@ -63,17 +72,20 @@ class EventEditState(StatesGroup):
 
 
 class EventDelState(StatesGroup):
-    """ Класс EventDelState. Хранит информацию и данные вводимые пользователем"""
+    """Класс EventDelState. Хранит информацию и данные вводимые пользователем"""
+
     id = State()
 
 
 class SendingMessageState(StatesGroup):
-    """ Класс SendingMessageState. Хранит информацию и данные вводимые пользователем"""
+    """Класс SendingMessageState. Хранит информацию и данные вводимые пользователем"""
+
     message_text = State()
 
 
 class UserActionState(StatesGroup):
-    """ Класс UserActionState. Хранит информацию и данные вводимые пользователем"""
+    """Класс UserActionState. Хранит информацию и данные вводимые пользователем"""
+
     name_student = State()
     event = State()
     name_event = State()
@@ -81,13 +93,6 @@ class UserActionState(StatesGroup):
 
 
 class GetDetailEventState(StatesGroup):
-    """ Класс GetDetailEventState. Хранит информацию и данные вводимые пользователем"""
+    """Класс GetDetailEventState. Хранит информацию и данные вводимые пользователем"""
+
     id_event = State()
-
-
-
-
-
-
-
-

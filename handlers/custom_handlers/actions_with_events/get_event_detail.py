@@ -9,13 +9,15 @@ from loader import dp
 from states.states import GetDetailEventState
 
 
-@dp.callback_query_handler(lambda callback_query: callback_query.data == "get_events_detal")
+@dp.callback_query_handler(
+    lambda callback_query: callback_query.data == "get_events_detal"
+)
 async def get_events_detal_1(message: [types.CallbackQuery, types.Message]) -> None:
     """
     Функция get_events_detal_1.
     Ожидает состояние.
     """
-    await message.message.answer('Введите ИД:')
+    await message.message.answer("Введите ИД:")
     await GetDetailEventState.id_event.set()
 
 
@@ -50,10 +52,10 @@ async def get_events_detal_2(message: types.Message, state: FSMContext) -> None:
 
             finally:
                 kb = admin_bts_eve()
-                await message.answer('Выберите действие:', reply_markup=kb)
+                await message.answer("Выберите действие:", reply_markup=kb)
                 await state.finish()
 
         else:
-            await message.answer('Такой ИД я не нахожу. Попробуйте ещё раз.')
+            await message.answer("Такой ИД я не нахожу. Попробуйте ещё раз.")
     except ValueError:
-        await message.answer('ИД может содержать только фиры. Попробуйте ещё раз.')
+        await message.answer("ИД может содержать только фиры. Попробуйте ещё раз.")

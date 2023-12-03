@@ -16,10 +16,10 @@ dict_config = {
     "formatters": {
         "base": {
             "format": "{level: %(levelname)s | "
-                      "logger: %(name)s | "
-                      "time: %(asctime)s | "
-                      "line №: %(lineno)s | "
-                      "message: %(message)s}"
+            "logger: %(name)s | "
+            "time: %(asctime)s | "
+            "line №: %(lineno)s | "
+            "message: %(message)s}"
         }
     },
     "handlers": {
@@ -27,7 +27,7 @@ dict_config = {
             "class": "logging.StreamHandler",
             "level": "DEBUG",
             "formatter": "base",
-            "stream": sys.stdout
+            "stream": sys.stdout,
         },
         "file_info_utils": {
             "class": "logging.handlers.TimedRotatingFileHandler",
@@ -37,7 +37,7 @@ dict_config = {
             "backupCount": 1,
             "level": "DEBUG",
             "encoding": "utf8",
-            "formatter": "base"
+            "formatter": "base",
         },
         "file_errors_utils": {
             "class": "logging.handlers.TimedRotatingFileHandler",
@@ -47,22 +47,16 @@ dict_config = {
             "backupCount": 1,
             "level": "ERROR",
             "encoding": "utf8",
-            "formatter": "base"
+            "formatter": "base",
         },
     },
     "loggers": {
-        "logger_main": {
-            "level": "DEBUG",
-            "handlers": ["console", "file_info_utils"]
-        },
-        "logger_loader": {
-            "level": "DEBUG",
-            "handlers": ["console", "file_info_utils"]
-        },
+        "logger_main": {"level": "DEBUG", "handlers": ["console", "file_info_utils"]},
+        "logger_loader": {"level": "DEBUG", "handlers": ["console", "file_info_utils"]},
     },
 }
 
 logging.config.dictConfig(dict_config)
 
-logger_root= logging.getLogger('')
+logger_root = logging.getLogger("")
 logger_root.setLevel(logging.DEBUG)

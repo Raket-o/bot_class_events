@@ -27,11 +27,11 @@ async def input_name(message: types.Message, state: FSMContext) -> None:
         async with state.proxy() as data:
             data["name"] = input_text_user
 
-        await message.answer('Введите пароль.')
+        await message.answer("Введите пароль.")
         await UserInfoState.password.set()
 
     else:
-        await message.answer('Такой ученик не найден.')
+        await message.answer("Такой ученик не найден.")
 
 
 @dp.message_handler(state=UserInfoState.password)
@@ -54,26 +54,26 @@ async def input_password(message: types.Message, state: FSMContext) -> None:
             telegram_id=user_id,
             user_first_name=user_first_name,
             user_last_name=user_last_name,
-            student_name=student_name
+            student_name=student_name,
         )
         await state.finish()
 
         if student_name == ADMIN_LOG and input_text_user == ADMIN_PASS:
             logger.info(f"Login 'admin: {student_name}'")
             kb = admin_buttons.admin_bts()
-            await message.answer('Админ меню:', reply_markup=kb)
+            await message.answer("Админ меню:", reply_markup=kb)
         else:
             logger.info(f"Login 'user: {student_name}'")
             list_events = database.gets_events()
 
             if list_events:
                 kb = reply.list_button.list_button(list_events)
-                await message.answer('Выберите событие:', reply_markup=kb)
+                await message.answer("Выберите событие:", reply_markup=kb)
                 await UserActionState.name_event.set()
             else:
-                await message.answer('События ещё не добавлены.')
+                await message.answer("События ещё не добавлены.")
 
     else:
         await state.finish()
         kb = logout.logout_bts()
-        await message.answer('Не правильный пароль.', reply_markup=kb)
+        await message.answer("Не правильный пароль.", reply_markup=kb)

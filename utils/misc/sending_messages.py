@@ -9,14 +9,18 @@ from loader import bot, dp
 from states.states import SendingMessageState
 
 
-@dp.callback_query_handler(lambda callback_query: callback_query.data == "all_sending_message")
-async def custom_sending_messages_1(message: [types.CallbackQuery, types.Message]) -> None:
+@dp.callback_query_handler(
+    lambda callback_query: callback_query.data == "all_sending_message"
+)
+async def custom_sending_messages_1(
+    message: [types.CallbackQuery, types.Message]
+) -> None:
     """
     Функия custom_sending_messages_1.
     Каллбэка с датой all_sending_message запускает данную функцию.
     Ожидает состояние.
     """
-    await message.message.answer('Введите тест:')
+    await message.message.answer("Введите тест:")
     await SendingMessageState.message_text.set()
 
 
@@ -29,7 +33,7 @@ async def custom_sending_messages_2(message: types.Message, state: FSMContext) -
     await sending_messages(input_text)
 
     kb = admin_bts()
-    await message.answer('Сообщения отправлены', reply_markup=kb)
+    await message.answer("Сообщения отправлены", reply_markup=kb)
     await state.finish()
 
 
