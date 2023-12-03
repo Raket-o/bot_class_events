@@ -5,25 +5,5 @@ services:
   app:
     build: .
     container_name: bot_class_events
-#    stop_signal: SIGKILL
-#    restart: always
-#    ports:
-#      - "8000:8000"
     volumes: ['./database:/app/database/', './logs/:/app/logs/']
     command: ["python", "main.py"]
-#    volumes:
-#     - ./database/database.db:/database/database.db
-#     - ./database/:/database/
-#     - ./logs/:/logs/
-    networks:
-      app_network:
-        ipv4_address: 192.168.55.3
-
-networks:
-  app_network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.55.0/24
-          gateway: 192.168.55.1
