@@ -56,7 +56,5 @@ dict_config = {
     },
 }
 
-logging.config.dictConfig(dict_config)
-
 logger_root = logging.getLogger("")
 logger_root.setLevel(logging.DEBUG)
